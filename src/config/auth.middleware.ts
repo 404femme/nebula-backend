@@ -1,9 +1,9 @@
 import { createMiddleware } from "hono/factory";
-import { auth, type AuthType } from "@/config/auth-client.js";
+import { auth, type AuthType } from "@/config/auth-client.ts";
 
 export const authMiddleware = createMiddleware<AuthType>(async (c, next) => {
   const session = await auth.api.getSession({ headers: c.req.raw.headers });
-
+  console.log("middlware:", session);
   if (!session) {
     c.set("user", null);
     c.set("session", null);

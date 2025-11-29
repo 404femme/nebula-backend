@@ -1,8 +1,8 @@
 import { Hono } from "hono";
-import { authMiddleware } from "./config/auth.middleware.js";
-import { authCors } from "./config/cors.middleware.js";
-import { router } from "./routes/index.js";
-import type { AuthType } from "./config/auth-client.js";
+import { authMiddleware } from "@/config/auth.middleware.ts";
+import { authCors } from "@/config/cors.middleware.ts";
+import { router } from "@/routes/index.ts";
+import type { AuthType } from "@/config/auth-client.ts";
 
 import "dotenv/config";
 

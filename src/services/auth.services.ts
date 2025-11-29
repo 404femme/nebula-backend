@@ -3,11 +3,21 @@ import type { Context } from "hono";
 export function getUser(c: Context) {
   const session = c.get("session");
   const user = c.get("user");
-  console.log("getUser");
-  if (!user) return { error: "User is unathorized" };
+  console.log("service:", user);
+  if (!user)
+    return {
+      error: "User is not auth",
+      data: {
+        user,
+        session,
+      },
+    };
 
   return {
-    user,
-    session,
+    error: null,
+    data: {
+      user,
+      session,
+    },
   };
 }

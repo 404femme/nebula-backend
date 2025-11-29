@@ -1,6 +1,6 @@
-import { createRouter } from "@/shared/lib/appClient.js";
-import * as AuthController from "../controllers/auth.controller.js";
-import { auth } from "@/config/auth-client.js";
+import { createRouter } from "@/shared/lib/appClient.ts";
+import * as AuthController from "@/controllers/auth.controller.ts";
+import { auth } from "@/config/auth-client.ts";
 
 const router = createRouter();
 

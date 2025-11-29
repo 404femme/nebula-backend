@@ -1,5 +1,5 @@
 import { Hono } from "hono";
-import type { AuthType } from "../../config/auth-client.js";
+import type { AuthType } from "@/config/auth-client.ts";
 
 export function createRouter() {
   return new Hono<AuthType>();

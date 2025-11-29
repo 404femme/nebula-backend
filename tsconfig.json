@@ -1,10 +1,12 @@
 {
   "compilerOptions": {
     "target": "ESNext",
-    "module": "NodeNext",
+    "moduleResolution": "bundler",
     "strict": true,
     "verbatimModuleSyntax": true,
     "skipLibCheck": true,
+    "allowImportingTsExtensions": true,
+    "noEmit": true,
     "types": [
       "node"
     ],
