@@ -30,7 +30,7 @@ export const auth = betterAuth({
     },
   },
 
-  trustedOrigins: ["http://localhost:3000"],
+  trustedOrigins: [process.env.CLIENT_ORIGIN as string],
 });
 
 export type AuthType = {

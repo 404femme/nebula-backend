@@ -1,7 +1,8 @@
 import { cors } from "hono/cors";
+import "dotenv/config";
 
 export const authCors = cors({
-  origin: "http://localhost:3000",
+  origin: process.env.CLIENT_ORIGIN as string,
   allowHeaders: ["Content-Type", "Authorization"],
   allowMethods: ["POST", "GET", "OPTIONS"],
   exposeHeaders: ["Content-Length"],
