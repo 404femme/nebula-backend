@@ -2,7 +2,7 @@ import { betterAuth } from "better-auth";
 import { openAPI } from "better-auth/plugins";
 import "dotenv/config";
 
-export const auth = betterAuth({
+export const betterAuthClient = betterAuth({
   socialProviders: {
     discord: {
       clientId: process.env.DISCORD_CLIENT_ID as string,
@@ -30,12 +30,12 @@ export const auth = betterAuth({
     },
   },
 
-  trustedOrigins: [process.env.CLIENT_ORIGIN as string],
+  trustedOrigins: [process.env.CLIENT_ORIGIN!],
 });
 
 export type AuthType = {
   Variables: {
-    user: typeof auth.$Infer.Session.user | null;
-    session: typeof auth.$Infer.Session.session | null;
+    user: typeof betterAuthClient.$Infer.Session.user | null;
+    session: typeof betterAuthClient.$Infer.Session.session | null;
   };
 };

@@ -1,20 +1,26 @@
 import { Hono } from "hono";
-import { authMiddleware } from "@/config/auth.middleware.ts";
-import { authCors } from "@/config/cors.middleware.ts";
-import { router } from "@/routes/index.ts";
-import type { AuthType } from "@/config/auth-client.ts";
+import { authMiddleware } from "@/auth/middleware";
+import { serve } from "@hono/node-server";
+
+import { corsConfig } from "./auth/config";
+import type { AuthType } from "./auth/client";
 
 import "dotenv/config";
+import { authRouter } from "./auth/auth.routes";
+import { App } from "./shared/lib/hono";
 
-const app = new Hono<AuthType>();
+const app = App();
 
 app.use("*", authMiddleware);
-app.use("/api/auth/*", authCors);
+app.use("/api/auth/*", corsConfig);
 
-const routes = [router] as const;
+const routes = [authRouter] as const;
 
 routes.forEach((route) => {
   app.basePath("/api").route("/", route);
 });
 
-export default app;
+serve({
+  fetch: app.fetch,
+  port: 4000,
+});
