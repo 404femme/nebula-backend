@@ -1,8 +1,8 @@
+import { env } from "@/shared/lib/envValidator";
 import { cors } from "hono/cors";
-import "dotenv/config";
 
 export const authCors = cors({
-  origin: process.env.CLIENT_ORIGIN as string,
+  origin: env.CLIENT_ORIGIN,
   allowHeaders: ["Content-Type", "Authorization"],
   allowMethods: ["POST", "GET", "OPTIONS"],
   exposeHeaders: ["Content-Length"],

@@ -4,8 +4,6 @@ import { authCors } from "@/config/cors.middleware.ts";
 import { router } from "@/routes/index.ts";
 import type { AuthType } from "@/config/auth-client.ts";
 
-import "dotenv/config";
-
 const app = new Hono<AuthType>();
 
 app.use("*", authMiddleware);

@@ -1,36 +1,29 @@
+import { env } from "@/shared/lib/envValidator";
 import { betterAuth } from "better-auth";
-import { openAPI } from "better-auth/plugins";
-import "dotenv/config";
 
 export const auth = betterAuth({
   socialProviders: {
     discord: {
-      clientId: process.env.DISCORD_CLIENT_ID as string,
-      clientSecret: process.env.DISCORD_CLIENT_SECRET as string,
+      clientId: env.DISCORD_CLIENT_ID,
+      clientSecret: env.DISCORD_CLIENT_SECRET,
     },
   },
-
-  plugins: [openAPI()],
 
   session: {
     cookieCache: {
       enabled: true,
-      maxAge: 5 * 60,
+      maxAge: 7 * 24 * 60 * 60,
+      strategy: "compact",
+      refreshCache: true,
     },
   },
 
-  advanced: {
-    crossSubDomainCookies: {
-      enabled: true,
-    },
-    defaultCookieAttributes: {
-      sameSite: "none",
-      secure: true,
-      partitioned: true,
-    },
+  account: {
+    updateAccountOnSignIn: true,
+    storeAccountCookie: true,
   },
 
-  trustedOrigins: [process.env.CLIENT_ORIGIN as string],
+  trustedOrigins: [env.CLIENT_ORIGIN],
 });
 
 export type AuthType = {
