@@ -13,11 +13,12 @@ export function getUser(c: Context) {
       },
     };
 
-  return {
-    error: null,
+  if (!session || !user) return c.json({ error: "Unathorized" }, 401);
+
+  return c.json({
     data: {
       user,
       session,
     },
-  };
+  });
 }

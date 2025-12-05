@@ -1,9 +1,11 @@
 import { createMiddleware } from "hono/factory";
-import { auth, type AuthType } from "@/config/auth-client.ts";
+import { type AuthType, betterAuthClient } from "./client";
 
 export const authMiddleware = createMiddleware<AuthType>(async (c, next) => {
   console.log("authMiddleware trigger");
-  const session = await auth.api.getSession({ headers: c.req.raw.headers });
+  const session = await betterAuthClient.api.getSession({
+    headers: c.req.raw.headers,
+  });
   console.log("authMlw:", session);
 
   if (!session) {
