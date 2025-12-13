@@ -1,4 +1,4 @@
-import type { AuthType } from "@/auth/client";
+import type { AuthType } from "@/api/auth/client";
 import { Hono } from "hono";
 
 export function App() {
