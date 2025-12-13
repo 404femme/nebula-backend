@@ -1,40 +1,31 @@
-import pino from "pino";
+import winston from "winston";
 
-export const logger = pino({
-  level: process.env.PINO_LOG_LEVEL ?? "info",
-  transport: {
-    target: "pino-pretty",
-    options: {
-      colorize: true,
-      translateTime: "SYS:HH:MM:ss",
-      ignore: "pid,hostname",
-      messageKey: "msg",
-      customColors: {
-        trace: "cyan",
-        debug: "blue",
-        info: "reset",
-        warn: "yellow",
-        error: "red",
-        fatal: "red",
-      },
-    },
-  },
+const uppercaseLevel = winston.format((info) => {
+  info.level = String(info.level || "").toUpperCase();
+  return info;
+})();
 
-  redact: {
-    paths: [
-      "name",
-      "email",
-      "token",
-      "ipAddress",
-      "id",
-      "user.name",
-      "*.user.name",
-      "*.user.email",
-      "*.user.id",
-      "*.session.token",
-      "*.session.id",
-      "*.session.ipAddress",
-    ],
-    censor: "SECRET",
-  },
+const alignColorsAndTime = winston.format.combine(
+  winston.format.label({
+    label: "[LOGGER]",
+  }),
+  winston.format.timestamp({
+    format: "YY-MM-DD HH:mm:ss",
+  }),
+  winston.format.printf((info) => {
+    return ` ${info.label}  ${info.timestamp}  ${info.level} : ${info.message}`;
+  })
+);
+
+export const logger = winston.createLogger({
+  level: "info",
+  transports: [
+    new winston.transports.Console({
+      format: winston.format.combine(
+        uppercaseLevel,
+        winston.format.colorize({ all: true }),
+        alignColorsAndTime
+      ),
+    }),
+  ],
 });

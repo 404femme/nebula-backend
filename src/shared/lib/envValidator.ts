@@ -6,11 +6,11 @@ import { logger } from "@/shared/lib/logger";
 z.config({
   customError: (iss) => {
     if (iss.code === "invalid_type") {
-      logger.fatal(`Env ${iss.path} variable is not found. Close the server`);
+      logger.error(`Env ${iss.path} variable is not found. Close the server`);
       process.exit(1);
     }
     if (iss.code === "too_small") {
-      logger.error(
+      logger.debug(
         `Env variables ${iss.path} is empty. Minimum is ${iss.minimum}`
       );
       return "";
